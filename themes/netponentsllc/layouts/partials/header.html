@@ -1,0 +1,19 @@
+<div class="container-fluid bg-dark text-white">
+  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom text-bg-dark">
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+        {{ $image := resources.Get "images/logo-no-background.png" }}
+        <img src="{{ $image.RelPermalink }}" alt="{{ site.Title }}" class="img-fluid" style="height: 50px; width: auto; margin-right: 10px;">
+        <h1>{{ site.Title }}</h1>
+      </a>
+    </div>
+
+    {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+
+    <div class="col-md-3 text-end">
+      <button type="button" class="btn btn-primary">Contact Us</button>
+    </div>
+  </div>
+</div>
+
+
