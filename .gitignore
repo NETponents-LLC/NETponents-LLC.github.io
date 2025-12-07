@@ -1,1 +1,4 @@
-public/*.deb
+*.deb
+public/
+.hugo_build.lock
+resources/_gen/
