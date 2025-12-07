@@ -45,20 +45,52 @@
     z-index: 2;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 2.5rem 3rem;
+    border-radius: 14px;
+    /* ensure children sit above the backdrop */
+  }
+
+  .hero-content > * {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* translucent blurred backdrop behind the hero content for legibility */
+  .hero-backdrop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100%, 1100px);
+    height: calc(100% - 2rem);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px) saturate(1.05);
+    -webkit-backdrop-filter: blur(6px) saturate(1.05);
+    border-radius: 14px;
+    z-index: 2;
+    pointer-events: none;
   }
 
   .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: var(--primary-purple);
+    /* subtle stroke — reduced thickness for a gentler effect */
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.541);
+    /* single, soft drop shadow for depth and contrast */
+    text-shadow: 0 6px 14px rgba(0, 0, 0, 0.32);
   }
 
   .hero-subtitle {
     font-size: 1.75rem;
     margin-bottom: 1rem;
     font-weight: 300;
-    opacity: 0.95;
+    /* lighter, high-contrast subtitle with subtle shadow */
+    color: rgba(255, 255, 255, 0.95);
+    -webkit-text-stroke: 0.2px rgba(0,0,0,0.15);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.22);
+    opacity: 1;
   }
 
   .hero-description {
@@ -283,8 +315,9 @@
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="hero-content">
+    <div class="hero-backdrop" aria-hidden="true"></div>
     <h1 class="hero-title">Technology Solutions for Human Processes</h1>
-    <p class="hero-subtitle">Empowering People Through Innovation</p>
+    <p class="hero-subtitle">Empowering People Through Human-Centered Innovation</p>
     <p class="hero-description">
       At NETponents LLC, we believe in using technology to augment humans, not replace them. 
       We create powerful solutions that multiply human potential and streamline your workflows.
