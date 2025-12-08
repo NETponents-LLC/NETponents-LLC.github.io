@@ -1,0 +1,389 @@
+{{ define "main" }}
+<style>
+  :root {
+    --primary-purple: #6B5B95;
+    --primary-teal: #6B9B9E;
+    --primary-mint: #7ECBAE;
+    --light-mint: #A8E6CF;
+    --dark-bg: #2C3E50;
+    --light-bg: #ECF0F1;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 50%, var(--primary-mint) 100%);
+    color: white;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    border-radius: 14px;
+    /* ensure children sit above the backdrop */
+  }
+
+  .hero-content > * {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* translucent blurred backdrop behind the hero content for legibility */
+  .hero-backdrop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100%, 1100px);
+    height: calc(100% - 2rem);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px) saturate(1.05);
+    -webkit-backdrop-filter: blur(6px) saturate(1.05);
+    border-radius: 14px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--primary-purple);
+    /* subtle stroke — reduced thickness for a gentler effect */
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.541);
+    /* single, soft drop shadow for depth and contrast */
+    text-shadow: 0 6px 14px rgba(0, 0, 0, 0.32);
+  }
+
+  .hero-subtitle {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    /* lighter, high-contrast subtitle with subtle shadow */
+    color: rgba(255, 255, 255, 0.95);
+    -webkit-text-stroke: 0.2px rgba(0,0,0,0.15);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.22);
+    opacity: 1;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-primary {
+    background: white;
+    color: var(--primary-purple);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .btn-secondary:hover {
+    background: white;
+    color: var(--primary-purple);
+    transform: translateY(-2px);
+  }
+
+  /* Values Section */
+  .values-section {
+    background: var(--light-bg);
+    padding: 5rem 2rem;
+  }
+
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--dark-bg);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #555;
+    margin-bottom: 3rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .value-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .value-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .value-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-purple);
+  }
+
+  .value-description {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* Products Section */
+  .products-section {
+    background: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-mint) 100%);
+    color: white;
+    padding: 5rem 2rem;
+  }
+
+  .products-section .section-title,
+  .products-section .section-subtitle {
+    color: white;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .product-card {
+    background: white;
+    color: var(--dark-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-teal) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .product-content {
+    padding: 2rem;
+  }
+
+  .product-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-purple);
+  }
+
+  .product-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-purple);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .product-link:hover {
+    background: var(--primary-teal);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <h1 class="hero-title">Technology Solutions for Human Processes</h1>
+    <p class="hero-subtitle">Empowering People Through Human-Centered Innovation</p>
+    <p class="hero-description">
+      At NETponents LLC, we believe in using technology to augment humans, not replace them. 
+      We create powerful solutions that multiply human potential and streamline your workflows.
+    </p>
+    <div class="cta-buttons">
+      <a href="/products" class="btn btn-primary">Explore Our Products</a>
+      <a href="/services" class="btn btn-secondary">Custom Solutions</a>
+    </div>
+  </div>
+</section>
+
+<!-- Values Section -->
+<section class="values-section">
+  <div class="section-container">
+    <h2 class="section-title">Why Choose NETponents?</h2>
+    <p class="section-subtitle">We're committed to delivering technology that works for you</p>
+    
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🚀</div>
+        <h3 class="value-title">Innovation First</h3>
+        <p class="value-description">
+          Cutting-edge solutions built with the latest technologies and best practices to keep you ahead of the curve.
+        </p>
+      </div>
+      
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3 class="value-title">Human-Centered</h3>
+        <p class="value-description">
+          Technology designed to enhance human capabilities, not replace them. We build tools that empower your team.
+        </p>
+      </div>
+      
+      <div class="value-card">
+        <div class="value-icon">⚡</div>
+        <h3 class="value-title">Rapid Deployment</h3>
+        <p class="value-description">
+          Fast implementation and seamless integration with your existing workflows. Get up and running quickly.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section class="products-section">
+  <div class="section-container">
+    <h2 class="section-title">Our Products</h2>
+    <p class="section-subtitle">Powerful solutions designed to solve real-world problems</p>
+    
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-image">
+          <img src="/img/rocky-hero.png" alt="rockydj screenshot" style="max-height:100%"/>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">RockyDJ</h3>
+          <p class="product-description">
+            Streamline your business processes with intelligent automation. Save time and reduce errors with our comprehensive workflow tools.
+          </p>
+          <a href="https://www.rockydj.com" class="product-link">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}
