@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="wrap page">
+  <h1>{{ .Title }}</h1>
+  <div class="prose">{{ .Content }}</div>
+  <div class="post-list">
+    {{ range .Paginator.Pages }}
+    <article class="post-item">
+      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+      {{ partial "post-meta.html" . }}
+      <p>{{ with .Params.summary }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}</p>
+      <a class="more" href="{{ .RelPermalink }}">Read write-up →</a>
+    </article>
+    {{ end }}
+  </div>
+  {{ template "_internal/pagination.html" . }}
+</div>
+{{ end }}
