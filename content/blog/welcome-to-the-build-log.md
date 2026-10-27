@@ -1,7 +1,7 @@
 +++
 title = 'Welcome to the Build Log'
 date = 2026-10-27T00:00:00-04:00
-draft = false
+draft = true
 tags = ['build-log', 'kicad', 'embedded']
 summary = 'What this blog covers and how a typical edge-to-cloud project is structured.'
 +++
