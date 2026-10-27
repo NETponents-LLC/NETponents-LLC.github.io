@@ -3,42 +3,13 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-842DJF12K8');
 </script>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
-{{ with resources.Get "sass/main.scss" }}
-  {{ $opts := dict
-    "enableSourceMap" (not hugo.IsProduction)
-    "outputStyle" (cond hugo.IsProduction "compressed" "expanded")
-    "targetPath" "css/main.css"
-    "transpiler" "libsass"
-  }}
-  {{ with . | toCSS $opts }}
-    {{ if hugo.IsProduction }}
-      {{ with . | fingerprint }}
-        <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-      {{ end }}
-    {{ else }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}">
-    {{ end }}
-  {{ end }}
-{{ end }}
-{{ with resources.Get "js/main.js" }}
-  {{ $opts := dict
-    "minify" hugo.IsProduction
-    "sourceMap" (cond hugo.IsProduction "" "external")
-    "targetPath" "js/main.js"
-  }}
-  {{ with . | js.Build $opts }}
-    {{ if hugo.IsProduction }}
-      {{ with . | fingerprint }}
-        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
-      {{ end }}
-    {{ else }}
-      <script src="{{ .RelPermalink }}"></script>
-    {{ end }}
-  {{ end }}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }} | Custom Hardware &amp; Software Engineering{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
+<link rel="icon" href="/favicon.ico">
+{{ with resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{ end }}

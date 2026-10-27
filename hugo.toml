@@ -2,3 +2,27 @@ baseURL = 'https://netponents.com/'
 languageCode = 'en-us'
 title = 'NETponents LLC'
 theme = 'netponentsllc'
+enableRobotsTXT = true
+
+[params]
+  description = 'Custom hardware and software engineering for business. Custom electronics, IoT, and secure cloud pipelines from Saline, Michigan.'
+  email = 'sales@netponents.com'
+
+[[menus.main]]
+  name = 'Home'
+  pageRef = '/'
+  weight = 10
+
+[[menus.main]]
+  name = 'Blog'
+  pageRef = '/blog'
+  weight = 20
+
+[[menus.main]]
+  name = 'Contact'
+  pageRef = '/contact'
+  weight = 30
+
+[markup.highlight]
+  noClasses = false
+  lineNos = false
